@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import { sanityClient,urlFor } from '../sanity'
+import { sanityClient, urlFor } from '../sanity'
 import { Collection } from '../typings'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
@@ -10,13 +10,13 @@ import Link from 'next/link'
 
 interface Props {
   collections: Collection[]
-  
+
 }
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({ collections }: Props ) {
-  
+export default function Home({ collections }: Props) {
+
   return (
     <div className='max-w-7xl flex min-h-screen flex-col py-20 px-10 2xl:px-0 mx-auto'>
       <Head>
@@ -26,38 +26,42 @@ export default function Home({ collections }: Props ) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      
+
       <h1 className='mb-10 text-3xl font-extralight'>
-      the {''}
-      <span className='font-extrabold underline decoration-pink-600/50'>papafam</span>{''}
-       nft market place
-    </h1>
+        the {''}
+        <span className='font-extrabold underline decoration-pink-600/50'>papafam</span>{''}
+        nft market place
+      </h1>
 
       {/* <h6 className='text-100xl font-bold text-red-500 ' >helloo world</h6> */}
       <main className='bg-slate-100 p-10 shadow-2xl shadow-rose-400'>
-        
-       <div className='grid space-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
-        {collections && collections.map((collections) =>(
-          
-<Link href={`/nft/${collections.slug.current}`}>
-<div className='transition-all duration-200 hover:scale-105 flex flex-col items-center cursor-pointer'>
-        <img className='h-30 w-40 rounded-2xl object-cover' src={urlFor(collections.mainImage).url()} alt="" />
-      <div className='p-5'>
-        <h2 className='text-3xl'>{collections.title}</h2>
-        </div>
-        
-</div>
-</Link>
 
-        ))}
+        <div className='grid space-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
+          {collections && collections.map((collections) => (
+             
+             
+            
+          <div key ={collections._id} className='transition-all duration-200 hover:scale-105 flex flex-col items-center cursor-pointer'>
+          
+               <Link href={`/nft/${collections.slug.current}`}>
+                <img className='h-30 w-40 rounded-2xl object-cover'  width={300} src={urlFor(collections.mainImage).url()} alt="" />
+                </Link>
+                <div className='p-5'>
+                  <h2 className='text-3xl'>{collections.title}</h2>
+                </div>
+                
+              </div>
+             
+
+          ))}
         </div>
       </main>
-      </div>
-      
+    </div>
+
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async() => {
+export const getServerSideProps: GetServerSideProps = async () => {
 
   const query = `*[_type == 'collection']
   {
